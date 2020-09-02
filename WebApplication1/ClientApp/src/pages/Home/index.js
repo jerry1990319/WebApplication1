@@ -85,14 +85,18 @@ const Home = () => {
         const { rn, lm, wd } = getFieldValue;
 
         if (key === "国家網站") {
-            const govSearch = wd.length > 38 ? wd.substring(0, 28) : wd;
+            const govSearch = wd.length >37 ? wd.substring(0, 28) : wd;
+            console.log('wd',wd.length);
+            console.log('govSearch',govSearch);
             window.open(`${url}?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`);
         }
         else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
             window.open(`${url}?key=${nameKeyword}`);
         }
         else {
-            const baidu = wd.length > 38 ? wd.substring(0, 38) : wd;
+            const baidu = wd.length > 37 ? wd.substring(0, 38) : wd;
+            console.log('wd',wd.length);
+            console.log('baidu',baidu);
             window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
         }
     }

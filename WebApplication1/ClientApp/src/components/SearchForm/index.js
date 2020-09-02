@@ -26,7 +26,7 @@ const ManagementForm = React.forwardRef((props, ref) => {
         >
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
-                <Button className="reset" onClick={props.onReset} type="primary">reset</Button>
+                <Button className="reset" onClick={props.onReset} type="text">reset</Button>
                 {/* <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button> */}
             </div>
             <FormItem
