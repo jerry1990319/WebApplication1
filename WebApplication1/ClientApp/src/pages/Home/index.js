@@ -74,7 +74,7 @@ const resultTime = [
         name: 'Last Year'
     }
 ];
-let searchkey = '';
+// let searchkey = '';
 const Home = () => {
     const mapRef = useRef();
     const [locale, setlocale] = useState(false);
@@ -85,7 +85,7 @@ const Home = () => {
         const { rn, lm, wd } = getFieldValue;
 
         if (key === "国家網站") {
-            const govSearch = wd.length > 38 ? wd.substring(0, 30) : wd;
+            const govSearch = wd.length > 38 ? wd.substring(0, 28) : wd;
             window.open(`${url}?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`);
         }
         else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
@@ -130,9 +130,11 @@ const Home = () => {
         const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
         const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        searchkey = keyname;
-        const a = `“${name || nameKeyword}” ${keyname}`;
-
+        // searchkey = keyname;
+        let a = `“${name === undefined ? nameKeyword : name}” ${keyname}`;
+        if(nameKeyword === '' || name === '') {
+            a = keyname;
+        }
         const keyer = a.length > 38 ? a.substring(0, 38) : a;
         console.log('arr', keyname, keyer);
         setError(a.length > 38 ? true : false)
