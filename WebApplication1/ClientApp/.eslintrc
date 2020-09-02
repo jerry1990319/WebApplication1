@@ -1,0 +1,21 @@
+{
+  "extends": "react-app",
+  "globals": {
+    "$": true,
+    "Kinetic": true,
+    "TWEEN": true,
+    "Swiper": true,
+    "QRCode": true,
+    "TagCanvas": true,
+    "Tiny": true,
+    "wx": true,
+    "Sketchpad": true,
+    "JSZip":true,
+    "saveAs":true,
+    "md5":true
+  },
+  "rules": {
+    "no-mixed-operators": 0,
+    "no-control-regex": 0
+  }
+}
