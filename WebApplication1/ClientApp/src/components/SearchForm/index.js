@@ -1,51 +1,53 @@
-import React, { useImperativeHandle } from 'react';
+import React, { useImperativeHandle, useState } from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import { Selectoption, Multiselect } from '@/utils/index';
 import { Legal, Risk, News } from '@/utils/configText';
+import { Exchange } from '@/utils/index';
 
 import './index.less';
-const { Option } = Select;
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
 };
 const FormItem = Form.Item;
 const ManagementForm = React.forwardRef((props, ref) => {
-    console.log('error', props.error)
+    console.log('props', props)
     const [form] = Form.useForm();
-    const handleSubmit = (values) => {
-        if (props.onSubmit) {
-            props.onSubmit(values)
-        }
-    }
     useImperativeHandle(ref, () => ({
         form: form
     }));
     return (
         <Form
-            form={form} name="control-hooks"
-            onFinish={handleSubmit}
+            form={form}
+            name="control-hooks"
             {...layout}
             className="creatform"
+            onValuesChange={props.onValuesChange}
         >
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
                 <Button className="reset" onClick={props.onReset} type="primary">reset</Button>
-                <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button>
+                {/* <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button> */}
             </div>
             <FormItem
                 name="wd"
                 label={<div>Search string:</div>}
-                onChange={e => props.onSearchel(e.target.value)}
+            // onChange={e => props.onSearchel(e.target.value)}
+            >
+                <Input className="disabled-color" disabled={false} readOnly />
+
+            </FormItem>
+            <FormItem
+                name="names"
+                style={{ display: 'none' }}
             >
                 <Input className="disabled-color" disabled={false} />
-
             </FormItem>
 
             {
                 props.error === true ? (
                     <p className='error'>maximum field length cannot exceed 38 characters.</p>
-               ) : null
+                ) : null
             }
             <FormItem name="otherwords" label={<div>All this word:</div>}>
                 <Input className="disabled-color" disabled={false} placeholder="Text you are looking for" />

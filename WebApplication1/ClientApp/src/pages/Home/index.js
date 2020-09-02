@@ -74,77 +74,42 @@ const resultTime = [
         name: 'Last Year'
     }
 ];
-
+let searchkey = '';
 const Home = () => {
     const mapRef = useRef();
     const [locale, setlocale] = useState(false);
     const [nameKeyword, setNamekeyword] = useState('');
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
     const onSearchClick = (url, key) => {
-        mapRef.current.form.setFieldsValue({
-            wd: nameKeyword
-        });
         const getFieldValue = mapRef.current.form.getFieldValue();
-        const { rn, lm, Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', wd, OmitWords = "" } = getFieldValue;
-        const otherk = otherkeywords.replace(/\s+/g, " ");
-        const otherW = otherwords.replace(/\s+/g, " ");
-        const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
-        const name = Exchange(wd, locale);
-        const selectKeys = [...Legal, ...Risk, ...Words];
-        const allselect = selectKeys.length > 0 ? selectKeys.join(" ") : [];
-        const allKeys = otherkey && allselect.length > 0 ? `${allselect} ${otherkey}` : `${allselect}${otherkey}`;
-        const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
-        const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
-        const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        setNamekeyword(Exchange(nameKeyword, locale));
-        const a = `“${name}” ${keyname}`;
-        const keyer = a.length > 38 ? a.substring(0, 30) : a;
-        mapRef.current.form.setFieldsValue({
-            wd: name,
-            otherwords: Exchange(otherwords, locale),
-            otherkeywords: Exchange(otherkeywords, locale),
-            // SYS:keyer
-        });
-        if (key === "国家網站") {
+        const { rn, lm, wd } = getFieldValue;
 
-            window.open(`${url}?wd=${keyer} site:gov.cn &rn=${rn}&lm=${lm}`);
+        if (key === "国家網站") {
+            const govSearch = wd.length > 38 ? wd.substring(0, 30) : wd;
+            window.open(`${url}?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`);
         }
         else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
-            window.open(`${url}?key=${name}`);
-        } else if (url === 'confirm') {
-        
-            mapRef.current.form.setFieldsValue({
-                wd: keyer
-            });
-            setError(a.length>38?true:false)
+            window.open(`${url}?key=${nameKeyword}`);
         }
         else {
-            window.open(`${url}?wd=${keyer}&rn=${rn}&lm=${lm}`);
+            const baidu = wd.length > 38 ? wd.substring(0, 38) : wd;
+            window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
         }
     }
     const onChange = (e) => {
-        const keyword = ['被判', '贪污', '案情', '犯罪'];
-        setNamekeyword(e.target.value)
-        if (e.target.value.trim()) {
-            mapRef.current.form.setFieldsValue({
-                wd: e.target.value,
-                keywords: keyword.join(" ")
-            })
+        setNamekeyword(e.target.value);
+        mapRef.current.form.setFieldsValue({
+            names: e.target.value,
 
-        } else {
-            mapRef.current.form.setFieldsValue({
-                wd: e.target.value,
-                keywords: ""
-            })
-        }
+        })
+        onFinalChange(mapRef.current.form.getFieldValue(), e.target.value)
     }
     const onReset = () => {
         mapRef.current.form.resetFields();
         setNamekeyword();
     }
     const onChangeSearchel = (val) => {
-        console.log(val)
-        // alert(val)
+
         setNamekeyword(Exchange(val, locale))
     }
     const onPressEnter = () => {
@@ -154,8 +119,34 @@ const Home = () => {
         window.open('http://www.gsxt.gov.cn/index.html');
 
     }
-    console.log('error1', error)
+    const onFinalChange = function (allValues, name) {
+        const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', names = '', OmitWords = "" } = allValues;
+        const otherk = otherkeywords.replace(/\s+/g, " ");
+        const otherW = otherwords.replace(/\s+/g, " ");
+        const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
+        const selectKeys = [...Legal, ...Risk, ...Words];
+        const allselect = selectKeys.length > 0 ? selectKeys.join(" ") : [];
+        const allKeys = otherkey && allselect.length > 0 ? `${allselect} ${otherkey}` : `${allselect}${otherkey}`;
+        const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
+        const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
+        const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
+        searchkey = keyname;
+        const a = `“${name || nameKeyword}” ${keyname}`;
 
+        const keyer = a.length > 38 ? a.substring(0, 38) : a;
+        console.log('arr', keyname, keyer);
+        setError(a.length > 38 ? true : false)
+        setTimeout(() => {
+            mapRef.current.form.setFieldsValue({
+                wd: `${keyer}`
+            })
+        }, 0);
+
+    }
+    const onValuesChange = (changedValues, allValues) => {
+        onFinalChange(allValues);
+        // setError(a.length > 38 ? true : false)
+    }
     return (
 
         <div className="container">
@@ -173,19 +164,18 @@ const Home = () => {
                     onReset={onReset}
                     error={error}
                     onChangeSearch={onSearchClick}
-                    // onConfirm={onConfirm}
+                    onValuesChange={onValuesChange}
                     onSearchel={onChangeSearchel}
                 />
                 <div className="footer">
 
-                    <div className="gov-qx" onClick={SearchGov}>
+                    <div className="gov-qx">
                         <h1>Quick Link</h1>
-                        <div className="gov-hover">
+                        <div className="gov-hover" onClick={SearchGov}>
                             <img src={gov} />
                             <p>国家企信</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
