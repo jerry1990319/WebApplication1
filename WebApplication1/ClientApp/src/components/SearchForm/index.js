@@ -30,14 +30,6 @@ const ManagementForm = React.forwardRef((props, ref) => {
                 {/* <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button> */}
             </div>
             <FormItem
-                name="wd"
-                label={<div>Search string:</div>}
-            // onChange={e => props.onSearchel(e.target.value)}
-            >
-                <Input className="disabled-color" disabled={false} readOnly />
-
-            </FormItem>
-            <FormItem
                 name="names"
                 style={{ display: 'none' }}
             >
@@ -97,6 +89,14 @@ const ManagementForm = React.forwardRef((props, ref) => {
                 initialValue={props.resultTime[0].cord}
             >
                 {Selectoption(props.resultTime)}
+            </FormItem>
+            <FormItem
+                name="wd"
+                label={<div>Search string:</div>}
+            // onChange={e => props.onSearchel(e.target.value)}
+            >
+                <Input className="disabled-color" disabled={false} readOnly />
+
             </FormItem>
         </Form>
     );

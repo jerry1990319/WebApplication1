@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Input, ConfigProvider } from 'antd';
+import { Input, ConfigProvider, Button } from 'antd';
 import List from '@/components/Listbar';
 import SearchForm from '@/components/SearchForm';
 import { Exchange } from '@/utils/index';
@@ -83,11 +83,10 @@ const Home = () => {
     const onSearchClick = (url, key) => {
         const getFieldValue = mapRef.current.form.getFieldValue();
         const { rn, lm, wd } = getFieldValue;
-
         if (key === "国家網站") {
-            const govSearch = wd.length >37 ? wd.substring(0, 28) : wd;
-            console.log('wd',wd.length);
-            console.log('govSearch',govSearch);
+            const govSearch = wd.length > 37 ? wd.substring(0, 28) : wd;
+            console.log('wd', wd.length);
+            console.log('govSearch', govSearch);
             window.open(`${url}?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`);
         }
         else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
@@ -95,8 +94,8 @@ const Home = () => {
         }
         else {
             const baidu = wd.length > 37 ? wd.substring(0, 38) : wd;
-            console.log('wd',wd.length);
-            console.log('baidu',baidu);
+            console.log('wd', wd.length);
+            console.log('baidu', baidu);
             window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
         }
     }
@@ -136,7 +135,7 @@ const Home = () => {
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
         // searchkey = keyname;
         let a = `“${name === undefined ? nameKeyword : name}” ${keyname}`;
-        if(nameKeyword === '' || name === '') {
+        if (nameKeyword === '' || name === '') {
             a = keyname;
         }
         const keyer = a.length > 38 ? a.substring(0, 38) : a;
@@ -153,12 +152,37 @@ const Home = () => {
         onFinalChange(allValues);
         // setError(a.length > 38 ? true : false)
     }
+    const Searchbtn = async () => {
+        const getFieldValue = mapRef.current.form.getFieldValue();
+        const { rn, lm, wd } = getFieldValue;
+        const govSearch = wd.length > 37 ? wd.substring(0, 28) : wd;
+        const baidu = wd.length > 37 ? wd.substring(0, 38) : wd;
+        // 天眼查
+        window.open(`https://www.tianyancha.com/search?key=${nameKeyword}`, 'tyc');
+        // 启信宝
+        window.open(`https://www.qixin.com/search/search?key=${nameKeyword}`, 'qxb');
+        // 企查查
+        window.open(`https://www.qcc.com/search?key=${nameKeyword}`, 'qcc');
+        // 百度
+        window.open(`https://www.baidu.com/s?wd=${baidu}&rn=${rn}&lm=${lm}`, 'baidu');
+        // 国家网站
+        window.open(`https://www.baidu.com/s?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
+    }
     return (
 
         <div className="container">
             <div className="wrapper">
+                <Button onClick={Searchbtn} type="primary">Search</Button>
                 {/* <h1 className="title">Search Engine</h1> */}
-                <Input className="search-input" onChange={e => onChange(e)} value={nameKeyword} onPressEnter={onPressEnter} />
+                <Input
+                    className="search-input"
+                    onChange={e => onChange(e)}
+                    value={nameKeyword}
+                    onPressEnter={onPressEnter}
+                // onSearch={value => Searchbtn()}
+                //  enterButton
+
+                />
                 <List
                     searchData={searchData}
                     searchClick={onSearchClick}
