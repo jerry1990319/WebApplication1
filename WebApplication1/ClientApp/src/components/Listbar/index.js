@@ -1,4 +1,6 @@
 import React from 'react';
+import { DownOutlined } from '@ant-design/icons';
+
 class List extends React.Component {
     state = {
         actived: false
@@ -13,6 +15,11 @@ class List extends React.Component {
         })
 
     }
+    onChangeShow = () => {
+        if (this.props.onChangeShow) {
+            this.props.onChangeShow()
+        }
+    }
     render() {
         const { searchData = [] } = this.props;
         const { actived } = this.state;
@@ -23,11 +30,11 @@ class List extends React.Component {
                     {
                         searchData.map((item, index) => {
                             return (
-                                <li key={item.key}  onClick={() => { this.searchClick(item.url, item.key, index) }}>
-                                    {/* <div className='bar-bck'> */}
+                                <li key={item.key} onClick={() => { this.searchClick(item.url, item.key, index) }}>
+                                    <div className='bar-bck'>
                                         <img src={item.icon} />
                                         <p className="icon-text">{item.key}</p>
-                                    {/* </div> */}
+                                    </div>
                                 </li>
                             )
                         })
@@ -35,7 +42,15 @@ class List extends React.Component {
 
 
                 </ul>
-                <div className="background"></div>
+                <div className="on-off">
+                    <span className="parentheses-left" />
+                    <span className="text" onClick={this.onChangeShow}>{this.props.text}</span>
+                    {
+                        this.props.text && this.props.text === '展开' ? (<DownOutlined className="on-off-icon" />) : null
+                    }
+
+                    <span className="parentheses-right" />
+                </div>
             </div>
         )
     }
