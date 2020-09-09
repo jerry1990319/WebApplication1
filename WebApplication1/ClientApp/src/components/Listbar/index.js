@@ -1,5 +1,5 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 class List extends React.Component {
     state = {
@@ -30,8 +30,8 @@ class List extends React.Component {
                     {
                         searchData.map((item, index) => {
                             return (
-                                <li key={item.key} onClick={() => { this.searchClick(item.url, item.key, index) }}>
-                                    <div className='bar-bck'>
+                                <li key={item.key}>
+                                    <div className='bar-bck' onClick={() => { this.searchClick(item.url, item.key, index) }}>
                                         <img src={item.icon} />
                                         <p className="icon-text">{item.key}</p>
                                     </div>
@@ -42,13 +42,12 @@ class List extends React.Component {
 
 
                 </ul>
-                <div className="on-off">
+                <div className="on-off" onClick={this.onChangeShow}>
                     <span className="parentheses-left" />
-                    <span className="text" onClick={this.onChangeShow}>{this.props.text}</span>
+                    <span className="text">{this.props.text}</span>
                     {
-                        this.props.text && this.props.text === '展开' ? (<DownOutlined className="on-off-icon" />) : null
+                        this.props.text && this.props.text === 'Expand' ? (<DownOutlined className="on-off-icon" />) : <UpOutlined className="on-off-icon2" />
                     }
-
                     <span className="parentheses-right" />
                 </div>
             </div>

@@ -3,7 +3,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ECEDEE!important;
 }
 
 
@@ -11,4 +10,9 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+  background: #fff;
 }
+  ::-webkit-scrollbar{
+
+    display:none;
+  }

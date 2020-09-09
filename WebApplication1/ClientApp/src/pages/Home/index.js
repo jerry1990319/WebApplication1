@@ -82,7 +82,7 @@ const Home = () => {
     const [nameKeyword, setNamekeyword] = useState('');
     const [error, setError] = useState(false);
     const [show, setShow] = useState(false);
-    const [text, setText] = useState('展开')
+    const [text, setText] = useState('Expand')
     const onSearchClick = (url, key) => {
         if (mapRef.current) {
             const getFieldValue = mapRef.current.form.getFieldValue();
@@ -170,7 +170,14 @@ const Home = () => {
     }
     const onISshow = () => {
         setShow(show === true ? false : true);
-        setText(text === '隐藏' ? '展开' : '隐藏');
+        setText(text === 'Collapse' ? 'Expand' : 'Collapse');
+        // if (mapRef.current) {
+        //    console.log('mapRef.current',mapRef.current)
+        //     // mapRef.current.form.setFieldsValue({
+        //     //     names:nameKeyword
+        //     // })
+        //     // onFinalChange(mapRef.current.form.getFieldValue(), nameKeyword)
+        // }
     }
     const Searchbtn = async () => {
         if (mapRef.current) {
