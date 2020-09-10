@@ -3,11 +3,11 @@ import { Select, Modal, notification, Checkbox, TreeSelect } from 'antd';
 const { Option } = Select;
 // option
 export function Multiselect(data, title) {
-    const margin=title==="Select Risk Words"?'0 2%':'0';
+    const margin = title === "Select Risk Words" ? '0 2%' : '0';
     return (
         <TreeSelect
             placeholder={title}
-            style={{margin:margin}}
+            style={{ margin: margin }}
             treeCheckable={true}
             maxTagCount={2}
             showArrow={true}
@@ -82,4 +82,17 @@ export function label() {
     return (
         <span>aaaa<br>222</br></span>
     );
+}
+export function onlyKey(nameKeyword) {
+    const val = nameKeyword ? Exchange(nameKeyword, false) : '';
+    // 天眼查
+    window.open(`https://www.tianyancha.com/search?key=${val}`, 'tyc');
+    // 启信宝
+    window.open(`https://www.qixin.com/search/search?key=${val}`, 'qxb');
+    // 企查查
+    window.open(`https://www.qcc.com/search?key=${val}`, 'qcc');
+    // 百度
+    window.open(`https://www.baidu.com/s?wd=${val}`, 'baidu');
+    // 国家网站
+    window.open(`https://www.baidu.com/s?wd=${val} site:gov.cn`, 'gov');
 }

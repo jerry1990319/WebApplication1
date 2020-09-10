@@ -35,12 +35,6 @@ const ManagementForm = React.forwardRef((props, ref) => {
             >
                 <Input className="disabled-color" disabled={false} />
             </FormItem>
-
-            {
-                props.error === true ? (
-                    <p className='error'>maximum field length cannot exceed 38 characters.</p>
-                ) : null
-            }
             <FormItem name="otherwords" label={<div>All this word:</div>}>
                 <Input className="disabled-color" disabled={false} placeholder="Text you are looking for" />
             </FormItem>
@@ -56,7 +50,6 @@ const ManagementForm = React.forwardRef((props, ref) => {
                         name="Risk"
                         noStyle
                         style={{ margin: '0 1.5%' }}
-                    // className="aa"
                     >
                         {Multiselect(Risk, "Select Risk Words")}
                     </FormItem>
@@ -93,11 +86,15 @@ const ManagementForm = React.forwardRef((props, ref) => {
             <FormItem
                 name="wd"
                 label={<div>Search string:</div>}
-            // onChange={e => props.onSearchel(e.target.value)}
             >
                 <Input className="disabled-color" disabled={false} readOnly />
 
             </FormItem>
+            {
+                props.error === true ? (
+                    <p className='error'>maximum field length cannot exceed 38 characters.</p>
+                ) : null
+            }
             <Button className="reset" onClick={props.onReset} type="text">reset</Button>
         </Form>
     );

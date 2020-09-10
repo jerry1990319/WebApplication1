@@ -1,3 +1,8 @@
+import qx from '@/assets/images/qx.png';
+import baidu from '@/assets/images/baidu.png';
+import gov from '@/assets/images/gov.png';
+import qcc from '@/assets/images/qcc.png';
+import tyc from '@/assets/images/tyc.png';
 export const Legal = [
     {
         title: 'All',
@@ -288,3 +293,67 @@ export const News = [
     }
 
 ]
+export const searchData = [
+    {
+        icon: tyc,
+        key: '天眼查',
+        url: 'https://www.tianyancha.com/search'
+    },
+
+    {
+        icon: qx,
+        key: '启信宝',
+        url: 'https://www.qixin.com/search'
+    },
+    {
+        icon: qcc,
+        key: '企查查',
+        url: 'https://www.qcc.com/search'
+    },
+    {
+        icon: baidu,
+        key: '百度',
+        url: 'https://www.baidu.com/s'
+    },
+    {
+        icon: gov,
+        key: '国家網站',
+        url: 'https://www.baidu.com/s'
+    },
+]
+export const resultPage = [
+    {
+        cord: 10,
+        name: 'Baidu default - 10'
+    },
+    {
+        cord: 30,
+        name: '30 results'
+    },
+    {
+        cord: 50,
+        name: '50 results'
+    }
+];
+export const resultTime = [
+    {
+        cord: '',
+        name: 'Whenever'
+    },
+    {
+        cord: 1,
+        name: 'Last Day (24h)'
+    },
+    {
+        cord: 7,
+        name: 'Last Week'
+    },
+    {
+        cord: 30,
+        name: 'Last Month'
+    },
+    {
+        cord: 365,
+        name: 'Last Year'
+    }
+];
