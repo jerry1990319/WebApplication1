@@ -141,8 +141,6 @@ const Home = () => {
     const onFinalChange = function (allValues, name) {
    
         const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', names = '', OmitWords = "" } = allValues;
-        console.log(111,name);
-        console.log(222,names)
         const otherk = otherkeywords.replace(/\s+/g, " ");
         const otherW = otherwords.replace(/\s+/g, " ");
         const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
@@ -152,7 +150,7 @@ const Home = () => {
         const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
         const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        let all = `“${name === undefined? nameKeyword : name}” ${keyname}`;
+        let all = `“${name === undefined? Exchange(nameKeyword,false) : name}” ${keyname}`;
         // console.log('nameKeyword',nameKeyword)
         if (names === '' || name === '') {
             all = keyname;
