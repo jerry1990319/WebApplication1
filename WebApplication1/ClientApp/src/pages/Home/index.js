@@ -116,14 +116,14 @@ const Home = () => {
     const onFocus = (e) => {
         setNamekeyword(e.target.value, locale);
         const val = e.target.value;
-        setTimeout(()=>{
+        setTimeout(() => {
             console.log('nameKeyword', val)
             mapRef.current.form.setFieldsValue({
                 names: Exchange(val, locale)
             })
             onFinalChange(mapRef.current.form.getFieldValue(), Exchange(val, locale))
-        },0)
-  
+        }, 0)
+
         // console.log('nameKeyword', e.target.value)
     }
     const onReset = () => {
@@ -139,7 +139,7 @@ const Home = () => {
 
     }
     const onFinalChange = function (allValues, name) {
-   
+
         const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', names = '', OmitWords = "" } = allValues;
         const otherk = otherkeywords.replace(/\s+/g, " ");
         const otherW = otherwords.replace(/\s+/g, " ");
@@ -150,7 +150,7 @@ const Home = () => {
         const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
         const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        let all = `“${name === undefined? Exchange(nameKeyword,false) : name}” ${keyname}`;
+        let all = `“${name === undefined ? Exchange(nameKeyword, false) : name}” ${keyname}`;
         // console.log('nameKeyword',nameKeyword)
         if (names === '' || name === '') {
             all = keyname;
@@ -177,34 +177,35 @@ const Home = () => {
         if (mapRef.current) {
             const getFieldValue = mapRef.current.form.getFieldValue();
             const { rn, lm, wd } = getFieldValue;
-            const govSearch = wd.length > 37 ? wd.substring(0, 28) : wd;
-            const baidu = wd.length > 37 ? wd.substring(0, 38) : wd;
+            const govSearch = wd && wd.length > 37 ? Exchange(wd.substring(0, 28), locale) : wd;
+            const baidu = wd && wd.length > 37 ? Exchange(wd.substring(0, 38), locale) : wd;
+            const names = nameKeyword ? Exchange(nameKeyword, locale) : nameKeyword;
             // 天眼查
-            window.open(`https://www.tianyancha.com/search?key=${Exchange(nameKeyword, locale)}`, 'tyc');
+            window.open(`https://www.tianyancha.com/search?key=${names}`, 'tyc');
             // 启信宝
-            window.open(`https://www.qixin.com/search/search?key=${Exchange(nameKeyword, locale)}`, 'qxb');
+            window.open(`https://www.qixin.com/search/search?key=${names}`, 'qxb');
             // 企查查
-            window.open(`https://www.qcc.com/search?key=${Exchange(nameKeyword, locale)}`, 'qcc');
+            window.open(`https://www.qcc.com/search?key=${names}`, 'qcc');
             // 百度
             window.open(`https://www.baidu.com/s?wd=${baidu}&rn=${rn}&lm=${lm}`, 'baidu');
             // 国家网站
-            window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
+            window.open(`https://www.baidu.com/s?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
         } else {
             onlyKey(nameKeyword)
         }
     }
     const onlyKey = (nameKeyword) => {
-
+        const val = nameKeyword ? Exchange(nameKeyword, locale) : '';
         // 天眼查
-        window.open(`https://www.tianyancha.com/search?key=${Exchange(nameKeyword, locale)}`, 'tyc');
+        window.open(`https://www.tianyancha.com/search?key=${val}`, 'tyc');
         // 启信宝
-        window.open(`https://www.qixin.com/search/search?key=${Exchange(nameKeyword, locale)}`, 'qxb');
+        window.open(`https://www.qixin.com/search/search?key=${val}`, 'qxb');
         // 企查查
-        window.open(`https://www.qcc.com/search?key=${Exchange(nameKeyword, locale)}`, 'qcc');
+        window.open(`https://www.qcc.com/search?key=${val}`, 'qcc');
         // 百度
-        window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)}`, 'baidu');
+        window.open(`https://www.baidu.com/s?wd=${val}`, 'baidu');
         // 国家网站
-        window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)} site:gov.cn`, 'gov');
+        window.open(`https://www.baidu.com/s?wd=${val} site:gov.cn`, 'gov');
     }
     return (
 
@@ -220,7 +221,7 @@ const Home = () => {
                         onChange={e => onFocus(e)}
                         onSearch={Searchbtn}
                         value={nameKeyword}
-                        onFocus={e=>onFocus(e)}
+                        // onFocus={e => onFocus(e)}
                     />
                 </div>
 
