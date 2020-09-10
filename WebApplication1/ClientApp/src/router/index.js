@@ -6,11 +6,11 @@ export const history = createBrowserHistory();
 export const routes = [
   {
     path:'/',
-    component: Login
-  },
-  {
-    path:'/home',
     component: Home
   }
+  // {
+  //   path:'/home',
+  //   component: Home
+  // }
   
 ]

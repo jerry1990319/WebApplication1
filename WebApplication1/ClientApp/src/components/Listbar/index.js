@@ -42,12 +42,13 @@ class List extends React.Component {
 
 
                 </ul>
-                <div className="on-off" onClick={this.onChangeShow}>
+                <div className="on-off">
                     <span className="parentheses-left" />
-                    <span className="text">{this.props.text}</span>
-                    {
+                    {/* <span className="text">{this.props.text}</span> */}
+                    <DownOutlined className="on-off-icon" />
+                    {/* {
                         this.props.text && this.props.text === 'Expand' ? (<DownOutlined className="on-off-icon" />) : <UpOutlined className="on-off-icon2" />
-                    }
+                    } */}
                     <span className="parentheses-right" />
                 </div>
             </div>

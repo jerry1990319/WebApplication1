@@ -90,37 +90,41 @@ const Home = () => {
             if (key === "国家網站") {
                 const govSearch = wd && wd.length > 37 ? wd.substring(0, 28) : wd;
                 console.log('govSearch', govSearch);
-                window.open(`${url}?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`);
+                window.open(`${url}?wd=${Exchange(govSearch, locale)} site:gov.cn &rn=${rn}&lm=${lm}`);
             }
             else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
-                window.open(`${url}?key=${nameKeyword}`);
+                window.open(`${url}?key=${Exchange(nameKeyword, locale)}`);
             }
             else {
                 const baidu = wd && wd.length > 37 ? wd.substring(0, 38) : wd;
-                window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
+                window.open(`${url}?wd=${Exchange(baidu, locale)}&rn=${rn}&lm=${lm}`);
+
             }
         } else {
             if (key === "国家網站") {
-                window.open(`${url}?wd=${nameKeyword} site:gov.cn`);
+                console.log('namekeyword', nameKeyword)
+                window.open(`${url}?wd=${Exchange(nameKeyword, locale)} site:gov.cn`);
             }
             else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
-                window.open(`${url}?key=${nameKeyword}`);
+                window.open(`${url}?key=${Exchange(nameKeyword, locale)}`);
             }
             else {
-                window.open(`${url}?wd=${nameKeyword}`);
+                window.open(`${url}?wd=${Exchange(nameKeyword, locale)}`);
             }
         }
     }
-    const onChange = (e) => {
-        setNamekeyword(e.target.value);
-        if (mapRef.current) {
+    const onFocus = (e) => {
+        setNamekeyword(e.target.value, locale);
+        const val = e.target.value;
+        setTimeout(()=>{
+            console.log('nameKeyword', val)
             mapRef.current.form.setFieldsValue({
-                names: e.target.value
+                names: Exchange(val, locale)
             })
-            onFinalChange(mapRef.current.form.getFieldValue(), e.target.value)
-        }
-        console.log('mapRef.current.form', mapRef.current)
-
+            onFinalChange(mapRef.current.form.getFieldValue(), Exchange(val, locale))
+        },0)
+  
+        // console.log('nameKeyword', e.target.value)
     }
     const onReset = () => {
         mapRef.current.form.resetFields();
@@ -130,16 +134,15 @@ const Home = () => {
 
         setNamekeyword(Exchange(val, locale))
     }
-    const onPressEnter = () => {
-        window.open(`https://www.baidu.com/s?wd=${nameKeyword}`);
-    }
     const SearchGov = () => {
         window.open('http://www.gsxt.gov.cn/index.html');
 
     }
     const onFinalChange = function (allValues, name) {
-        console.log('yyyyyyyyyyyyyyyyyyyyyyy', allValues)
+   
         const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', names = '', OmitWords = "" } = allValues;
+        console.log(111,name);
+        console.log(222,names)
         const otherk = otherkeywords.replace(/\s+/g, " ");
         const otherW = otherwords.replace(/\s+/g, " ");
         const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
@@ -149,9 +152,9 @@ const Home = () => {
         const arr = allKeys ? new String(Exchange(allKeys, locale)).split(" ") : [];
         const Omit = OmitWords ? new String(Exchange(OmitWords, locale)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        // searchkey = keyname;
-        let all = `“${name === undefined ? nameKeyword : name}” ${keyname}`;
-        if (nameKeyword === '' || name === '') {
+        let all = `“${name === undefined? nameKeyword : name}” ${keyname}`;
+        // console.log('nameKeyword',nameKeyword)
+        if (names === '' || name === '') {
             all = keyname;
         }
         const keyer = all.length > 38 ? all.substring(0, 38) : all;
@@ -171,13 +174,6 @@ const Home = () => {
     const onISshow = () => {
         setShow(show === true ? false : true);
         setText(text === 'Collapse' ? 'Expand' : 'Collapse');
-        // if (mapRef.current) {
-        //    console.log('mapRef.current',mapRef.current)
-        //     // mapRef.current.form.setFieldsValue({
-        //     //     names:nameKeyword
-        //     // })
-        //     // onFinalChange(mapRef.current.form.getFieldValue(), nameKeyword)
-        // }
     }
     const Searchbtn = async () => {
         if (mapRef.current) {
@@ -186,30 +182,31 @@ const Home = () => {
             const govSearch = wd.length > 37 ? wd.substring(0, 28) : wd;
             const baidu = wd.length > 37 ? wd.substring(0, 38) : wd;
             // 天眼查
-            window.open(`https://www.tianyancha.com/search?key=${nameKeyword}`, 'tyc');
+            window.open(`https://www.tianyancha.com/search?key=${Exchange(nameKeyword, locale)}`, 'tyc');
             // 启信宝
-            window.open(`https://www.qixin.com/search/search?key=${nameKeyword}`, 'qxb');
+            window.open(`https://www.qixin.com/search/search?key=${Exchange(nameKeyword, locale)}`, 'qxb');
             // 企查查
-            window.open(`https://www.qcc.com/search?key=${nameKeyword}`, 'qcc');
+            window.open(`https://www.qcc.com/search?key=${Exchange(nameKeyword, locale)}`, 'qcc');
             // 百度
             window.open(`https://www.baidu.com/s?wd=${baidu}&rn=${rn}&lm=${lm}`, 'baidu');
             // 国家网站
-            window.open(`https://www.baidu.com/s?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
+            window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
         } else {
             onlyKey(nameKeyword)
         }
     }
     const onlyKey = (nameKeyword) => {
+
         // 天眼查
-        window.open(`https://www.tianyancha.com/search?key=${nameKeyword}`, 'tyc');
+        window.open(`https://www.tianyancha.com/search?key=${Exchange(nameKeyword, locale)}`, 'tyc');
         // 启信宝
-        window.open(`https://www.qixin.com/search/search?key=${nameKeyword}`, 'qxb');
+        window.open(`https://www.qixin.com/search/search?key=${Exchange(nameKeyword, locale)}`, 'qxb');
         // 企查查
-        window.open(`https://www.qcc.com/search?key=${nameKeyword}`, 'qcc');
+        window.open(`https://www.qcc.com/search?key=${Exchange(nameKeyword, locale)}`, 'qcc');
         // 百度
-        window.open(`https://www.baidu.com/s?wd=${nameKeyword}`, 'baidu');
+        window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)}`, 'baidu');
         // 国家网站
-        window.open(`https://www.baidu.com/s?wd=${nameKeyword} site:gov.cn`, 'gov');
+        window.open(`https://www.baidu.com/s?wd=${Exchange(nameKeyword, locale)} site:gov.cn`, 'gov');
     }
     return (
 
@@ -222,8 +219,10 @@ const Home = () => {
                         enterButton="Search"
                         size="large"
                         className="search-input"
-                        onChange={e => onChange(e)}
+                        onChange={e => onFocus(e)}
                         onSearch={Searchbtn}
+                        value={nameKeyword}
+                        onFocus={e=>onFocus(e)}
                     />
                 </div>
 
@@ -233,21 +232,16 @@ const Home = () => {
                     onChangeShow={onISshow}
                     text={text}
                 />
-                {
-                    show === true ? (
-                        <SearchForm
-                            resultPage={resultPage}
-                            resultTime={resultTime}
-                            ref={mapRef}
-                            onReset={onReset}
-                            error={error}
-                            onChangeSearch={onSearchClick}
-                            onValuesChange={onValuesChange}
-                            onSearchel={onChangeSearchel}
-                        />
-                    ) : null
-                }
-
+                <SearchForm
+                    resultPage={resultPage}
+                    resultTime={resultTime}
+                    ref={mapRef}
+                    onReset={onReset}
+                    error={error}
+                    onChangeSearch={onSearchClick}
+                    onValuesChange={onValuesChange}
+                    onSearchel={onChangeSearchel}
+                />
                 <div className="footer">
 
                     <div className="gov-qx">
