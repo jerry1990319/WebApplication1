@@ -42,7 +42,7 @@ class List extends React.Component {
 
 
                 </ul>
-                <div className="on-off">
+                <div className="on-off" onClick={this.onChangeShow}>
                     <span className="parentheses-left" />
                     {/* <span className="text">{this.props.text}</span> */}
                     <DownOutlined className="on-off-icon" />

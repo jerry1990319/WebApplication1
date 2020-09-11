@@ -134,10 +134,11 @@ const Home = () => {
                     ref={mapRef}
                     onReset={onReset}
                     error={error}
+                    show={show}
                     onChangeSearch={onSearchClick}
                     onValuesChange={onValuesChange}
                 />
-                <div className="footer">
+                <div className={show === true ? "footer" : "footer fotter-position"}>
                     <div className="gov-qx">
                         <h1>Quick Link</h1>
                         <div className="gov-hover" onClick={SearchGov}>

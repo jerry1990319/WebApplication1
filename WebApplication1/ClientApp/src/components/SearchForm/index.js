@@ -21,12 +21,12 @@ const ManagementForm = React.forwardRef((props, ref) => {
             form={form}
             name="control-hooks"
             {...layout}
-            className="creatform"
+            className={props.show === true ? "creatform block" : "creatform hidden"}
             onValuesChange={props.onValuesChange}
         >
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
-             
+
                 {/* <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button> */}
             </div>
             <FormItem
