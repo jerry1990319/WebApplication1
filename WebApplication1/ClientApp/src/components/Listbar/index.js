@@ -42,14 +42,14 @@ class List extends React.Component {
 
 
                 </ul>
-                <div className="on-off" onClick={this.onChangeShow}>
-                    <span className="parentheses-left" />
+                <div className="on-off">
+                    <span className="parentheses-left"  onClick={this.onChangeShow}/>
                     {/* <span className="text">{this.props.text}</span> */}
-                    <DownOutlined className="on-off-icon" />
+                    <DownOutlined className="on-off-icon"  onClick={this.onChangeShow}/>
                     {/* {
                         this.props.text && this.props.text === 'Expand' ? (<DownOutlined className="on-off-icon" />) : <UpOutlined className="on-off-icon2" />
                     } */}
-                    <span className="parentheses-right" />
+                    <span className="parentheses-right"  onClick={this.onChangeShow}/>
                 </div>
             </div>
         )
