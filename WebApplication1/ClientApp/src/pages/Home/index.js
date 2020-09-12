@@ -40,8 +40,11 @@ const Home = () => {
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
         if (names === '') {
             all = keyname;
-        } else {
-            all = `“${names}”${keyname}`
+        } else if (keyname == '') {
+            all = names
+        }
+        else {
+            all = `“${names}” ${keyname}`
         }
         const keyer = all.length > 38 ? all.substring(0, 38) : all;
         setError(all.length > 38 ? true : false)
@@ -75,7 +78,7 @@ const Home = () => {
             window.open(`${url}?key=${searchKey}`);
         }
         else {
-            window.open(`${url}?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`);
+            window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
         }
 
     }
