@@ -40,8 +40,6 @@ class List extends React.Component {
                             )
                         })
                     }
-
-
                 </ul>
                 <div className="on-off">
                     <img src={Curlybraces} className="Curlybraces" onClick={this.onChangeShow}/>
