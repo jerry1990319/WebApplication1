@@ -1,12 +1,6 @@
 import React from 'react';
 import Curlybraces from '@/assets/images/Curlybraces.png';
-// import { DownOutlined, UpOutlined } from '@ant-design/icons';
-
 class List extends React.Component {
-    state = {
-        actived: false
-    }
-
     searchClick = (url, key, index) => {
         if (this.props.searchClick) {
             this.props.searchClick(url, key)
@@ -23,8 +17,6 @@ class List extends React.Component {
     }
     render() {
         const { searchData = [] } = this.props;
-        const { actived } = this.state;
-        // tabindex={index}
         return (
             <div className="search-bar">
                 <ul>
