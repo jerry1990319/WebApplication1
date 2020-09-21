@@ -104,6 +104,7 @@ const Home = () => {
     const onReset = () => {
         mapRef.current.form.resetFields();
         setNamekeyword();
+        setError(false)
     }
     // Quick Link（国家企信）
     const SearchGov = () => {
