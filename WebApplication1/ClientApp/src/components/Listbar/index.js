@@ -32,7 +32,7 @@ class List extends React.Component {
                     }
                 </ul>
                 <div className="on-off">
-                    <img src={this.props.show === true ? on : off} className="Curlybraces" onClick={this.onChangeShow} />
+                    <img src={this.props.show === true ? off : on} className="Curlybraces" onClick={this.onChangeShow} />
                 </div>
             </div>
         )

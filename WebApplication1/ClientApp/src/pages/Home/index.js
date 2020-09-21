@@ -92,7 +92,7 @@ const Home = () => {
         // 天眼查
         window.open(`https://www.tianyancha.com/search?key=${keyword}`, 'tyc');
         // 启信宝
-        window.open(`https://www.qixin.com/search/search?key=${keyword}`, 'qxb');
+        window.open(`https://www.qixin.com/search?key=${keyword}`, 'qxb');
         // 企查查
         window.open(`https://www.qcc.com/search?key=${keyword}`, 'qcc');
         // 百度
