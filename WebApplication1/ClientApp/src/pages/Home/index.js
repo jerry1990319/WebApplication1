@@ -19,38 +19,40 @@ const Home = () => {
     // 输入框取值替换表单内的namestring
     const onFocus = (e) => {
         setNamekeyword(e.target.value);
-        const val = Exchange(e.target.value, false);
         mapRef.current.form.setFieldsValue({
-            names: Exchange(val, false)
+            otherwords: e.target.value
         });
         onFinalChange(mapRef.current.form.getFieldValue());
     }
     // 对表单内的值进行监听合并 
     const onFinalChange = (allValues) => {
         let all = '';
-        const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', names = '', OmitWords = "" } = allValues;
+        const { Legal = [], Risk = [], Words = [], otherwords = '', otherkeywords = '', OmitWords = "" } = allValues;
         const otherk = otherkeywords.replace(/\s+/g, " ");
         const otherW = otherwords.replace(/\s+/g, " ");
-        const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
+        const OmitWordVal = OmitWords.replace(/\s+/g, " ");
+        setNamekeyword(otherW);
+        // const otherkey = otherk && otherW ? `${otherW} ${otherk}` : (otherk == "" ? otherW : otherk);
+        const otherkey = otherk;
         const selectKeys = [...Legal, ...Risk, ...Words];
         const allselect = selectKeys.length > 0 ? selectKeys.join(" ") : [];
         const allKeys = otherkey && allselect.length > 0 ? `${allselect} ${otherkey}` : `${allselect}${otherkey}`;
         const arr = allKeys ? new String(Exchange(allKeys, false)).split(" ") : [];
-        const Omit = OmitWords ? new String(Exchange(OmitWords, false)).split(" ") : [];
+        const Omit = OmitWordVal ? new String(Exchange(OmitWordVal, false)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        if (names === '') {
+        if (otherW === '') {
             all = keyname;
         } else if (keyname == '') {
-            all = names
+            all = otherW;
         }
         else {
-            all = `“${names}” ${keyname}`
+            all = `${otherW} ${keyname}`;
         }
         const keyer = all.length > 38 ? all.substring(0, 38) : all;
-        setError(all.length > 38 ? true : false)
+        setError(all.length > 38 ? true : false);
         setTimeout(() => {
             mapRef.current.form.setFieldsValue({
-                wd: `${keyer}`
+                wd: `${Exchange(keyer, false)}`
             })
         }, 0);
     }
@@ -61,10 +63,10 @@ const Home = () => {
     // 对搜索值字符限制的最后处理
     const onSearchKeys = () => {
         const getFieldValue = mapRef.current.form.getFieldValue();
-        const { rn, lm, wd, names } = getFieldValue;
+        const { rn, lm, wd, otherwords } = getFieldValue;
         const govSearch = wd && wd.length > 37 ? wd.substring(0, 28) : (wd === undefined ? '' : wd);
         const baidu = wd && wd.length > 37 ? wd.substring(0, 38) : (wd === undefined ? '' : wd);
-        const searchKey = names ? names : '';
+        const searchKey = otherwords ? otherwords.replace(/\s+/g, " ") : '';
         return { govSearch, baidu, searchKey, rn, lm }
     }
     // 点击按钮显示页面（单个）
@@ -75,10 +77,10 @@ const Home = () => {
             window.open(`${url}?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`);
         }
         else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
-            window.open(`${url}?key=${searchKey}`);
+            window.open(`${url}?key=${Exchange(searchKey, false)}`);
         }
         else {
-            window.open(`${url}?wd=${baidu}&rn=${rn}&lm=${lm}`);
+            window.open(`${url}?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`);
         }
 
     }
@@ -86,16 +88,17 @@ const Home = () => {
     const Searchbtn = () => {
         const allKeys = onSearchKeys();
         const { govSearch, baidu, searchKey, rn, lm } = allKeys;
+        const keyword = Exchange(searchKey, false);
         // 天眼查
-        window.open(`https://www.tianyancha.com/search?key=${searchKey}`, 'tyc');
+        window.open(`https://www.tianyancha.com/search?key=${keyword}`, 'tyc');
         // 启信宝
-        window.open(`https://www.qixin.com/search/search?key=${searchKey}`, 'qxb');
+        window.open(`https://www.qixin.com/search/search?key=${keyword}`, 'qxb');
         // 企查查
-        window.open(`https://www.qcc.com/search?key=${searchKey}`, 'qcc');
+        window.open(`https://www.qcc.com/search?key=${keyword}`, 'qcc');
         // 百度
-        window.open(`https://www.baidu.com/s?wd=${baidu}&rn=${rn}&lm=${lm}`, 'baidu');
+        window.open(`https://www.baidu.com/s?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`, 'baidu');
         // 国家网站
-        window.open(`https://www.baidu.com/s?wd=${govSearch} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
+        window.open(`https://www.baidu.com/s?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
     }
     // 重置
     const onReset = () => {
@@ -130,6 +133,7 @@ const Home = () => {
                     searchClick={onSearchClick}
                     onChangeShow={onISshow}
                     text={text}
+                    show={show}
                 />
                 <SearchForm
                     resultPage={resultPage}

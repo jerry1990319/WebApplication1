@@ -26,17 +26,15 @@ const ManagementForm = React.forwardRef((props, ref) => {
         >
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
-
-                {/* <Button className="reset" onClick={() => { props.onChangeSearch('confirm') }} type="text" style={{ marginRight: '20px' }}>confirm</Button> */}
             </div>
-            <FormItem
+            {/* <FormItem
                 name="names"
                 style={{ display: 'none' }}
             >
                 <Input className="disabled-color" disabled={false} />
-            </FormItem>
+            </FormItem> */}
             <FormItem name="otherwords" label={<div>All this word:</div>}>
-                <Input className="disabled-color" disabled={false} placeholder="Text you are looking for" />
+                <Input className="disabled-color" placeholder="Text you are looking for" />
             </FormItem>
             <FormItem name="keyqw" label={<div>Negative Words:</div>} initialValue=''>
                 <Input.Group compact>
@@ -67,10 +65,8 @@ const ManagementForm = React.forwardRef((props, ref) => {
             <FormItem name="OmitWords" label={<div>Omit this words:</div>}>
                 <Input className="disabled-color" placeholder="Omit this words (use a space to separate words)" />
             </FormItem>
-
             <FormItem
                 label={<div>Number of results<p>displayed on page:</p></div>}
-
                 name="rn"
                 initialValue={props.resultPage[0].cord}
             >
