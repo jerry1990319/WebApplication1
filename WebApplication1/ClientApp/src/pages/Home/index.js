@@ -42,11 +42,9 @@ const Home = () => {
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
         if (otherW === '') {
             all = keyname;
-        } else if (keyname == '') {
-            all = otherW;
         }
         else {
-            all = `${otherW} ${keyname}`;
+            all = `“${otherW}” ${keyname}`;
         }
         const keyer = all.length > 38 ? all.substring(0, 38) : all;
         setError(all.length > 38 ? true : false);
