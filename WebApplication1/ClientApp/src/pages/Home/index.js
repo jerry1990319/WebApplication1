@@ -19,6 +19,7 @@ const Home = () => {
     // 输入框取值替换表单内的namestring
     const onFocus = (e) => {
         setNamekeyword(e.target.value);
+
         mapRef.current.form.setFieldsValue({
             otherwords: e.target.value
         });
@@ -40,14 +41,15 @@ const Home = () => {
         const arr = allKeys ? new String(Exchange(allKeys, false)).split(" ") : [];
         const Omit = OmitWordVal ? new String(Exchange(OmitWordVal, false)).split(" ") : [];
         const keyname = arr.length > 0 && Omit.length > 0 ? `(${arr.join(" | ")}) -(${Omit.join(" | ")}) ` : (arr.length > 0 ? `(${arr.join(" | ")})` : (Omit.length > 0 ? `-(${Omit.join("|")}) ` : ""));
-        if (otherW === '') {
-            all = keyname;
-        }
-        else {
-            all = `“${otherW}” ${keyname}`;
-        }
-        const keyer = all.length > 38 ? all.substring(0, 38) : all;
-        setError(all.length > 38 ? true : false);
+        // if (otherW === '') {
+        //     all = keyname;
+        // }
+        // else {
+        //     all = `“${otherW}” ${keyname}`;
+        // }
+        all = keyname
+        const keyer = all.length > 35 ? all.substring(0, 35) : all;
+        setError(all.length > 35 ? true : false);
         setTimeout(() => {
             mapRef.current.form.setFieldsValue({
                 wd: `${Exchange(keyer, false)}`
@@ -62,41 +64,54 @@ const Home = () => {
     const onSearchKeys = () => {
         const getFieldValue = mapRef.current.form.getFieldValue();
         const { rn, lm, wd, otherwords } = getFieldValue;
-        const govSearch = wd && wd.length > 37 ? wd.substring(0, 28) : (wd === undefined ? '' : wd);
-        const baidu = wd && wd.length > 37 ? wd.substring(0, 38) : (wd === undefined ? '' : wd);
-        const searchKey = otherwords ? otherwords.replace(/\s+/g, " ") : '';
-        return { govSearch, baidu, searchKey, rn, lm }
+        const key = otherwords ? otherwords.replace(/\s+/g, " ") : '';
+        const keyword = Exchange(key, false);
+        // const Searchkey = keyword.split('；' || ';');
+        const Searchkey = keyword.split(/[\n\s+;|；]/g);
+        
+        // 
+        return { Searchkey, rn, lm, wd }
     }
     // 点击按钮显示页面（单个）
     const onSearchClick = (url, key) => {
         const allKeys = onSearchKeys();
-        const { govSearch, baidu, searchKey, rn, lm } = allKeys;
-        if (key === "国家網站") {
-            window.open(`${url}?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`);
-        }
-        else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
-            window.open(`${url}?key=${Exchange(searchKey, false)}`);
-        }
-        else {
-            window.open(`${url}?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`);
-        }
-
+        const { Searchkey, rn, lm, wd } = allKeys;
+        Searchkey.forEach(element => {
+            if (key === "国家網站") {
+                const govkey = `"${element}" ${wd}`;
+                const govSearch = govkey && govkey.length > 37 ? govkey.substring(0, 28) : (govkey === undefined ? '' : govkey);
+                window.open(`${url}?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`);
+            }
+            else if (key === "启信宝" || key === "天眼查" || key === "企查查") {
+                window.open(`${url}?key=${Exchange(element, false)}`);
+            }
+            else {
+                const baidukey = `"${element}" ${wd}`;
+                const baidu = baidukey && baidukey.length > 37 ? baidukey.substring(0, 38) : (baidukey === undefined ? '' : baidukey);
+                window.open(`${url}?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`);
+            }
+        })
     }
     // 点击Search打开五个页面（多个）
     const Searchbtn = () => {
         const allKeys = onSearchKeys();
-        const { govSearch, baidu, searchKey, rn, lm } = allKeys;
-        const keyword = Exchange(searchKey, false);
-        // 天眼查
-        window.open(`https://www.tianyancha.com/search?key=${keyword}`, 'tyc');
-        // 启信宝
-        window.open(`https://www.qixin.com/search?key=${keyword}`, 'qxb');
-        // 企查查
-        window.open(`https://www.qcc.com/search?key=${keyword}`, 'qcc');
-        // 百度
-        window.open(`https://www.baidu.com/s?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`, 'baidu');
-        // 国家网站
-        window.open(`https://www.baidu.com/s?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`, 'gov');
+        const { Searchkey, rn, lm, wd } = allKeys;
+        Searchkey.forEach((element, index) => {
+            console.log('element', element);
+            const key = `"${element}" ${wd}`;
+            const govSearch = key && key.length > 37 ? key.substring(0, 28) : (key === undefined ? '' : key);
+            const baidu = key && key.length > 37 ? key.substring(0, 38) : (key === undefined ? '' : key);
+            // 天眼查
+            window.open(`https://www.tianyancha.com/search?key=${element}`);
+            // 启信宝
+            window.open(`https://www.qixin.com/search?key=${element}`);
+            // 企查查
+            window.open(`https://www.qcc.com/search?key=${element}`);
+            // 百度
+            window.open(`https://www.baidu.com/s?wd=${Exchange(baidu, false)}&rn=${rn}&lm=${lm}`);
+            // 国家网站
+            window.open(`https://www.baidu.com/s?wd=${Exchange(govSearch, false)} site:gov.cn &rn=${rn}&lm=${lm}`);
+        });
     }
     // 重置
     const onReset = () => {

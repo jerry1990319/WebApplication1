@@ -27,12 +27,6 @@ const ManagementForm = React.forwardRef((props, ref) => {
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
             </div>
-            {/* <FormItem
-                name="names"
-                style={{ display: 'none' }}
-            >
-                <Input className="disabled-color" disabled={false} />
-            </FormItem> */}
             <FormItem name="otherwords" label={<div>All this word:</div>}>
                 <Input className="disabled-color" placeholder="Text you are looking for" />
             </FormItem>
@@ -84,7 +78,6 @@ const ManagementForm = React.forwardRef((props, ref) => {
                 label={<div>Search string:</div>}
             >
                 <Input className="disabled-color" disabled={false} readOnly />
-
             </FormItem>
             {
                 props.error === true ? (

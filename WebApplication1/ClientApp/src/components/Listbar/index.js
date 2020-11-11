@@ -14,7 +14,7 @@ class List extends React.Component {
         }
     }
     render() {
-        const { searchData = [] ,show} = this.props;
+        const { searchData = [], show } = this.props;
         return (
             <div className="search-bar">
                 <ul>
@@ -32,7 +32,7 @@ class List extends React.Component {
                     }
                 </ul>
                 <div className="on-off">
-                    <img src={this.props.show === true ? off : on} className="Curlybraces" onClick={this.onChangeShow} />
+                    <img src={show === true ? off : on} className="Curlybraces" onClick={this.onChangeShow} />
                 </div>
             </div>
         )
