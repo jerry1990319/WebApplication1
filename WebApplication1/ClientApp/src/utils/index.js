@@ -78,21 +78,13 @@ export function error(title, content) {
         okText: '知道了'
     });
 }
-export function label() {
-    return (
-        <span>aaaa<br>222</br></span>
-    );
+// 多个空格合并一个
+export function trimSplite(key) {
+    const data = key.replace(/\s+/g, " ");
+    return data
 }
-export function onlyKey(nameKeyword) {
-    const val = nameKeyword ? Exchange(nameKeyword, false) : '';
-    // 天眼查
-    window.open(`https://www.tianyancha.com/search?key=${val}`, 'tyc');
-    // 启信宝
-    window.open(`https://www.qixin.com/search/search?key=${val}`, 'qxb');
-    // 企查查
-    window.open(`https://www.qcc.com/search?key=${val}`, 'qcc');
-    // 百度
-    window.open(`https://www.baidu.com/s?wd=${val}`, 'baidu');
-    // 国家网站
-    window.open(`https://www.baidu.com/s?wd=${val} site:gov.cn`, 'gov');
+// 字符替换
+export function keyReplace(word) {
+    const data = new String(word).replace(/[,|，]/g, "|");
+    return data
 }

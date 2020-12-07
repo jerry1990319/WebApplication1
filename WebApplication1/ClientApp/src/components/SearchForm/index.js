@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useState } from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import { Selectoption, Multiselect } from '@/utils/index';
 import { Legal, Risk, News } from '@/utils/configText';
-import { Exchange } from '@/utils/index';
 
 import './index.less';
 const layout = {
@@ -27,10 +26,10 @@ const ManagementForm = React.forwardRef((props, ref) => {
             <div className="form-btn-box">
                 <h1>Advanced Search</h1>
             </div>
-            <FormItem name="otherwords" label={<div>All this word:</div>}>
+            <FormItem name="Allwords" label={<div>All this word:</div>}>
                 <Input className="disabled-color" placeholder="Text you are looking for" />
             </FormItem>
-            <FormItem name="keyqw" label={<div>Negative Words:</div>} initialValue=''>
+            <FormItem name='NegativeWords' label={<div>Negative Words:</div>}>
                 <Input.Group compact>
                     <FormItem
                         name="Legal"
@@ -46,12 +45,12 @@ const ManagementForm = React.forwardRef((props, ref) => {
                         {Multiselect(Risk, "Select Risk Words")}
                     </FormItem>
                     <FormItem
-                        name="Words"
+                        name="News"
                         noStyle
                     >
                         {Multiselect(News, "Select News Words")}
                     </FormItem>
-                    <FormItem name="otherkeywords" label={false}>
+                    <FormItem name="otherSelect" label={false}>
                         <Input className="disabled-color special-input" placeholder="if others, please specify (use a space to separate words)" />
                     </FormItem>
                 </Input.Group>
@@ -79,11 +78,11 @@ const ManagementForm = React.forwardRef((props, ref) => {
             >
                 <Input className="disabled-color" disabled={false} readOnly />
             </FormItem>
-            {
+            {/* {
                 props.error === true ? (
                     <p className='error'>maximum field length cannot exceed 38 characters.</p>
                 ) : null
-            }
+            } */}
             <Button className="reset" onClick={props.onReset} type="text">reset</Button>
         </Form>
     );
